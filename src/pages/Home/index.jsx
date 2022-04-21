@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 /** Images */
@@ -10,7 +9,7 @@ import styles from "./style.module.css";
 
 const Home = () => {
 
-    const [timeline, setTimeline] = useState([
+    const timeline = [
         {
             title: "Pendaftaran",
             date: "20 April 2022 - 15 Mei 2022",
@@ -31,7 +30,7 @@ const Home = () => {
             title: "Pengumuman Pemenang",
             date: "14 Juni 2022",
         },
-    ]);
+    ];
 
     return (
         <div className={styles.home_container}>
