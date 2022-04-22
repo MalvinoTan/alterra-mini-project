@@ -41,6 +41,8 @@ const Home = () => {
                 <button type="button" className={styles.btn_daftar}><Link to="/dashboard">Daftar</Link></button>
             </div>
 
+            <p><b>Peserta:</b><br />Mahasiswa S1 di seluruh Indonesia</p>
+
             <p><b>Biaya Pendaftaran:</b><br />Rp 50.000</p>
 
             <div className={styles.content_container}>

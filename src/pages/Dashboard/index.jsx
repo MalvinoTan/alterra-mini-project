@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
 
-    const [getTeams, { data, loading, refetch }] = useLazyQuery(GET_TEAMS);
+    const [getTeams, { data, loading, error, refetch }] = useLazyQuery(GET_TEAMS);
 
     useEffect(() => {
         getTeams();
@@ -41,7 +41,7 @@ const Dashboard = () => {
                             :
                             <p>Belum ada tim yang terdaftar</p>
                         :
-                        <></>
+                        <p>Terdapat Error: {error}</p>
             }
         </div>
     );
