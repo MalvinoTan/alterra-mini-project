@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 /** Styles */
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
@@ -18,6 +20,7 @@ const TeamData = () => {
 
     return (
         <div className={styles.team_data_container}>
+            <Link to="/dashboard" className={styles.back}>&lt; Back to Team List</Link>
             {
                 loading ?
                     <Spinner animation="border" variant="light" className={styles.spinner} />

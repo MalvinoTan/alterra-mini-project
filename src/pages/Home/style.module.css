@@ -7,6 +7,10 @@
     padding-top: 200px;
 }
 
+.home_container button {
+    font-weight: bold;
+}
+
 .contact_logo_container img {
     width: 25px;
     margin: 0 0.9rem;

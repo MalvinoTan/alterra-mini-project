@@ -6,6 +6,18 @@
     padding-top: 160px;
 }
 
+.team_data_container a {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    font-weight: bolder;
+    padding: 2.5rem 0 1rem 0;
+}
+
+.team_data_container a:hover {
+    color: #E4F065;
+}
+
 .team_data_container button {
     font-weight: bold;
     margin: 1rem 1rem 0 0;
@@ -64,7 +76,7 @@ p {
     background-color: red;
 }
 
-@media screen and (min-width: 426px) {
+@media screen and (min-width: 768px) {
     .team_data_container {
         padding: 110px 2.5rem 100px 2.5rem;
     }

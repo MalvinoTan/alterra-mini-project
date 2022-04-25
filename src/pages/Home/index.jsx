@@ -37,8 +37,8 @@ const Home = () => {
             <h1>MCOMP 2022<br />GUITAR DUO COMPETITION</h1>
 
             <div className={styles.button_container}>
-                <button type="button"><a href="#" download>Guidebook</a></button>
-                <button type="button" className={styles.btn_daftar}><Link to="/dashboard">Daftar</Link></button>
+                <a href="#" download><button type="button">Guidebook</button></a>
+                <Link to="/dashboard"><button type="button" className={styles.btn_daftar}>Daftar</button></Link>
             </div>
 
             <p><b>Peserta:</b><br />Mahasiswa S1 di seluruh Indonesia</p>
@@ -50,7 +50,7 @@ const Home = () => {
                 <p>
                     MComp 2022 merupakan kompetisi gitar duo untuk mahasiswa S1 yang diselenggarakan oleh Malvino Austin Tanura berskala nasional.
                 </p>
-                <button type="button" className={styles.btn_daftar}><Link to="/dashboard">See More &gt;</Link></button>
+                <Link to="/about"><button type="button" className={styles.btn_daftar}>See More &gt;</button></Link>
             </div>
 
             <div className={styles.content_container}>

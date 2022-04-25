@@ -43,6 +43,8 @@ const Dashboard = () => {
                         :
                         <p>Terdapat Error: {error}</p>
             }
+
+            <button type="button" className={styles.hidden}>Daftar Tim</button>
         </div>
     );
 };
