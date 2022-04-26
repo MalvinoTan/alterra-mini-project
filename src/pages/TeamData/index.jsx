@@ -44,6 +44,7 @@ const TeamData = () => {
                                             <p>NIM : {member.nim}</p>
                                             <p>Email : {member.email}</p>
                                             <p>No HP : {member.noHandphone}</p>
+                                            <button type="button">Edit</button>
                                         </div>
                                     ))
                                 }
@@ -54,7 +55,7 @@ const TeamData = () => {
                                 <label className={styles.title}>Upload Bukti Pembayaran (.pdf) </label>
                                 <input type="file" accept=".pdf" className={styles.file_input} />
 
-                                <button type="button" className={styles.btn_save}>Save</button>
+                                <button type="button" className={styles.btn_upload}>Upload File</button>
                             </div>
                             <button type="button" className={styles.hidden}>Tambah Anggota</button>
                             <button type="button" className={styles.btn_delete}>Hapus Tim</button>
