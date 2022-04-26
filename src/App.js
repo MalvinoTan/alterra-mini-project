@@ -1,17 +1,15 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
 /** Style */
-import './App.css';
-
-import Spinner from 'react-bootstrap/Spinner';
+import "./App.css";
 
 /** Components */
-import Header from './components/Header';
-import Home from './pages/Home';
-import Footer from './components/Footer';
-import Dashboard from './pages/Dashboard';
-import About from './pages/About';
-import TeamData from './pages/TeamData';
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
+import TeamData from "./pages/TeamData";
 
 const App = () => {
   return (

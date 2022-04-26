@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+
+/** Bootstrap Components */
+import { Spinner } from "react-bootstrap";
 
 /** Styles */
-import { useQuery } from "@apollo/client";
-import { useEffect } from "react";
-import { Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import { GET_TEAM_AND_MEMBERS_BY_ID } from "../../GraphQL/Members/queries";
 import styles from "./style.module.css";
+
+/** GraphQL Queries */
+import { GET_TEAM_AND_MEMBERS_BY_ID } from "../../GraphQL/Members/queries";
 
 const TeamData = () => {
 
@@ -45,6 +47,7 @@ const TeamData = () => {
                                             <p>Email : {member.email}</p>
                                             <p>No HP : {member.noHandphone}</p>
                                             <button type="button">Edit</button>
+                                            <button type="button" className={styles.btn_delete}>Hapus Anggota</button>
                                         </div>
                                     ))
                                 }

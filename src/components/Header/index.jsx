@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+
+/** Images */
 import logo from "../../assets/img/logo.png"
 
 /** Styles */
@@ -15,6 +17,7 @@ const Header = () => {
                 <Link to="/">Home</Link>
                 <Link to="/dashboard">Dashboard</Link>
                 <Link to="/about">About</Link>
+                <Link to="/">Login</Link>
             </nav>
         </header>
     );

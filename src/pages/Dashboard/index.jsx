@@ -1,13 +1,15 @@
-/** Styles */
-import styles from "./style.module.css";
-
-import { Spinner } from "react-bootstrap";
-
-/** Queries */
-import { GET_TEAMS } from "../../GraphQL/Teams/queries";
 import { useLazyQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+/** Bootstrap Components */
+import { Spinner } from "react-bootstrap";
+
+/** Styles */
+import styles from "./style.module.css";
+
+/** Queries */
+import { GET_TEAMS } from "../../GraphQL/Teams/queries";
 
 const Dashboard = () => {
 
