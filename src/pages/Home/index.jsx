@@ -1,8 +1,10 @@
+import { useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 
 /** Images */
 import alterra_logo from "../../assets/img/alterra.png";
 import mikroskil_logo from "../../assets/img/mikroskil.png";
+import { GET_USER } from "../../GraphQL/Users/queries";
 
 /** Styles */
 import styles from "./style.module.css";
@@ -31,6 +33,8 @@ const Home = () => {
             date: "14 Juni 2022",
         },
     ];
+
+    const [getUser, { data, loading }] = useLazyQuery(GET_USER);
 
     return (
         <div className={styles.home_container}>

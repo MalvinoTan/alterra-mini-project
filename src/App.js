@@ -5,11 +5,14 @@ import "./App.css";
 
 /** Components */
 import Header from "./components/Header";
-import Home from "./pages/Home";
 import Footer from "./components/Footer";
+
+/** Pages */
+import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import TeamData from "./pages/TeamData";
+import Login from "./pages/Login";
 
 const App = () => {
   return (
@@ -20,6 +23,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/:id" element={<TeamData />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </div>

@@ -17,6 +17,12 @@
     font-weight: bold;
 }
 
+.dashboard_container p {
+    margin: 4rem 0;
+    font-style: italic;
+    opacity: .5;
+}
+
 .spinner {
     margin: 5rem auto;
 }
@@ -39,10 +45,6 @@
 
 .team span {
     color: white;
-}
-
-.hidden {
-    display: none;
 }
 
 @media screen and (min-width: 768px) {

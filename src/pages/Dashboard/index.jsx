@@ -1,9 +1,9 @@
 import { useLazyQuery } from "@apollo/client";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** Bootstrap Components */
-import { Spinner } from "react-bootstrap";
+import { Spinner, Modal } from "react-bootstrap";
 
 /** Styles */
 import styles from "./style.module.css";
@@ -41,12 +41,12 @@ const Dashboard = () => {
                                 </div>
                             ))
                             :
-                            <p>Belum ada tim yang terdaftar</p>
+                            <p>Belum ada tim yang terdaftar...</p>
                         :
                         <p>Terdapat Error: {error}</p>
             }
 
-            <button type="button" className={styles.hidden}>Tambah Tim</button>
+            <button type="button">Tambah Tim</button>
         </div>
     );
 };
