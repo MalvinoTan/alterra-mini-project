@@ -1,4 +1,3 @@
-import { useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 
 /** Images */
@@ -33,8 +32,6 @@ const Home = () => {
             date: "14 Juni 2022",
         },
     ];
-
-    const [getUser, { data, loading }] = useLazyQuery(GET_USER);
 
     return (
         <div className={styles.home_container}>
