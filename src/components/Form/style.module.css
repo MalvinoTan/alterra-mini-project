@@ -1,4 +1,4 @@
-.form_container form {
+.form_container .form_container form {
     display: flex;
     flex-direction: column;
 }
