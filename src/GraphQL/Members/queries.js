@@ -24,7 +24,7 @@ export const INSERT_MEMBER = gql`
             id
         }
     }
-`
+`;
 
 export const DELETE_MEMBER = gql`
     mutation deleteMemberById($id: Int!) {
@@ -32,4 +32,4 @@ export const DELETE_MEMBER = gql`
             id
         }
     }
-`
+`;

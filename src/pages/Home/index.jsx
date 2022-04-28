@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 /** Images */
 import alterra_logo from "../../assets/img/alterra.png";
 import mikroskil_logo from "../../assets/img/mikroskil.png";
-import { GET_USER } from "../../GraphQL/Users/queries";
 
 /** Styles */
 import styles from "./style.module.css";

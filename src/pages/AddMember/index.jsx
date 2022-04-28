@@ -3,6 +3,9 @@ import { useState } from "react";
 
 import { useNavigate, Link, useParams } from "react-router-dom";
 
+/** Bootstrap Components */
+import { Spinner } from "react-bootstrap";
+
 /** Styles */
 import styles from "./style.module.css";
 
@@ -11,7 +14,6 @@ import { INSERT_MEMBER } from "../../GraphQL/Members/queries";
 
 /** Components */
 import Form from "../../components/Form";
-import { Spinner } from "react-bootstrap";
 import Header from "../../components/Header";
 
 const AddMember = () => {

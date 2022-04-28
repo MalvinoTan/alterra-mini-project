@@ -1,3 +1,4 @@
+/** Images */
 import logo from "../../assets/img/logo.png"
 
 /** Styles */

@@ -1,7 +1,9 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
+
+/** Bootstrap Components */
+import { Spinner } from "react-bootstrap";
 
 /** Styles */
 import styles from "./style.module.css";
@@ -11,7 +13,6 @@ import { INSERT_TEAM } from "../../GraphQL/Teams/queries";
 
 /** Components */
 import Form from "../../components/Form";
-import { Spinner } from "react-bootstrap";
 import Header from "../../components/Header";
 
 const AddTeam = () => {

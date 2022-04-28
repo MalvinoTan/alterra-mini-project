@@ -7,7 +7,7 @@ import { Spinner } from "react-bootstrap";
 /** Styles */
 import styles from "./style.module.css";
 
-/** GraphQL Queries */
+/** Queries */
 import { DELETE_MEMBER, GET_TEAM_AND_MEMBERS_BY_ID } from "../../GraphQL/Members/queries";
 import { DELETE_TEAM_BY_ID } from "../../GraphQL/Teams/queries";
 

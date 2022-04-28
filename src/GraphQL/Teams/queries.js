@@ -20,7 +20,7 @@ export const INSERT_TEAM = gql`
             university
         }
     }  
-`
+`;
 
 export const DELETE_TEAM_BY_ID = gql`
     mutation deleteTeam($id: Int!) {
@@ -28,4 +28,4 @@ export const DELETE_TEAM_BY_ID = gql`
             id
         }
     }
-`
+`;

@@ -1,16 +1,19 @@
 import { useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
+
+/** Bootstrap Components */
+import { Spinner } from "react-bootstrap";
 
 /** Styles */
 import styles from "./style.module.css";
 
 /** Components */
 import Form from "../../components/Form";
-import { GET_USER } from "../../GraphQL/Users/queries";
-import { Spinner } from "react-bootstrap";
 import Header from "../../components/Header";
+
+/** Queries */
+import { GET_USER } from "../../GraphQL/Users/queries";
 
 const Login = () => {
 
