@@ -3,8 +3,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    padding: 160px 1rem 100px 1rem;
-    padding-top: 160px;
+    padding: 210px 1rem 100px 1rem;
 }
 
 .about_container .logo {
@@ -40,7 +39,11 @@
     width: 100%;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 768px) {
+    .about_container {
+        padding-top: 160px;
+    }
+
     .about_container .logo {
         width: 20%;
     }

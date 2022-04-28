@@ -17,3 +17,19 @@ export const GET_TEAM_AND_MEMBERS_BY_ID = gql`
         }
     }  
 `;
+
+export const INSERT_MEMBER = gql`
+    mutation insertMember($id_team: Int, $name: String, $nim: String, $email: String, $noHandphone: String) {
+        insert_members_one(object: {id_team: $id_team, name: $name, nim: $nim, email: $email, noHandphone: $noHandphone}) {
+            id
+        }
+    }
+`
+
+export const DELETE_MEMBER = gql`
+    mutation deleteMemberById($id: Int!) {
+        delete_members_by_pk(id: $id) {
+            id
+        }
+    }
+`

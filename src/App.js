@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
 /** Components */
-import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 /** Pages */
@@ -14,6 +13,8 @@ import About from "./pages/About";
 import TeamData from "./pages/TeamData";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import AddTeam from "./pages/AddTeam";
+import AddMember from "./pages/AddMember";
 
 const App = () => {
   return (
@@ -25,6 +26,8 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/dashboard/add-team" element={<AddTeam />} />
+        <Route path="/dashboard/:id/add-member" element={<AddMember />} />
       </Routes>
       <Footer />
     </div>

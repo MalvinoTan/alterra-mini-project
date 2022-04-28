@@ -3,8 +3,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    padding: 160px 1rem 100px 1rem;
-    padding-top: 160px;
+    padding: 210px 1rem 100px 1rem;
 }
 
 .dashboard_container h2 {
@@ -47,7 +46,15 @@
     color: white;
 }
 
+.hidden {
+    display: none;
+}
+
 @media screen and (min-width: 768px) {
+    .dashboard_container {
+        padding-top: 160px;
+    }
+
     .team {
         justify-content: space-between;
         padding: 1.5rem 2.5rem;

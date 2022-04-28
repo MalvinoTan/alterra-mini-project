@@ -10,3 +10,22 @@ export const GET_TEAMS = gql`
         }
     }
 `;
+
+export const INSERT_TEAM = gql`
+    mutation insertTeam($id_user: Int, $teamName: String, $university: String) {
+        insert_teams_one(object: {id_user: $id_user, teamName: $teamName, university: $university}) {
+            id
+            id_user
+            teamName
+            university
+        }
+    }  
+`
+
+export const DELETE_TEAM_BY_ID = gql`
+    mutation deleteTeam($id: Int!) {
+        delete_teams_by_pk(id: $id) {
+            id
+        }
+    }
+`

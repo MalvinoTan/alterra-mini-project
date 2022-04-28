@@ -36,7 +36,11 @@ const Dashboard = () => {
     }, []);
 
     const handleClick = (id) => {
-        navigate(`/dashboard/${id}`);
+        navigate(`${id}`);
+    }
+
+    const handleAdd = () => {
+        navigate("add-team");
     }
 
     return (
@@ -62,7 +66,7 @@ const Dashboard = () => {
                             <p>Terdapat Error: {error}</p>
                 }
 
-                <button type="button">Tambah Tim</button>
+                <button type="button" onClick={handleAdd}>Tambah Tim</button>
             </div>
         </>
 

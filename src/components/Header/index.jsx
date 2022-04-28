@@ -10,8 +10,6 @@ const Header = () => {
 
     const dataUser = JSON.parse(localStorage.getItem("token"))
 
-    console.log(dataUser)
-
     return (
         <header className={styles.header}>
             <h1 className={styles.title}>

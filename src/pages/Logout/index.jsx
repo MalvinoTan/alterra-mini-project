@@ -1,16 +1,19 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+/** Styles */
+import styles from "./style.module.css";
 
-const Logout = (params) => {
+/** Components */
+import Header from "../../components/Header";
 
-    const navigate = useNavigate();
+const Logout = () => {
 
     localStorage.removeItem("token");
 
-    useEffect(() => {
-        navigate("/");
-    }, [])
-
+    return (
+        <>
+            <Header />
+            <h2 className={styles.logout}>You have logged out</h2>
+        </>
+    );
 };
 
 export default Logout;
