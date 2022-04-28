@@ -7,6 +7,11 @@ import logo from "../../assets/img/logo.png"
 import styles from "./style.module.css";
 
 const Header = () => {
+
+    const dataUser = JSON.parse(localStorage.getItem("token"))
+
+    console.log(dataUser)
+
     return (
         <header className={styles.header}>
             <h1 className={styles.title}>
@@ -15,9 +20,14 @@ const Header = () => {
             </h1>
             <nav className={styles.nav}>
                 <Link to="/">Home</Link>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard" className={dataUser === null ? styles.hidden : null}>Dashboard</Link>
                 <Link to="/about">About</Link>
-                <Link to="/login">Login</Link>
+                {
+                    dataUser === null ?
+                        <Link to="/login">Login</Link>
+                        :
+                        <Link to="/logout">Logout</Link>
+                }
             </nav>
         </header>
     );

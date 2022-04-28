@@ -13,24 +13,6 @@
     margin-bottom: 2rem;
 }
 
-.login_container form {
-    display: flex;
-    flex-direction: column;
-}
-
-.login_container label {
-    margin-bottom: .2rem;
-    margin-top: 1rem;
-}
-
-.login_container input {
-    margin: .5rem 0;
-    padding: 0.4em;
-    outline: none;
-}
-
-.login_container button {
-    font-weight: bold;
-    width: 100px;
-    margin: 2rem auto;
+.spinner {
+    margin: 0 auto;
 }

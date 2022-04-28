@@ -1,41 +1,30 @@
-/** Bootstrap Components */
-import { Modal } from "bootstrap";
+/** Styles */
+import styles from "./style.module.css";
 
-const ModalBox = ({ show, handleClose }) => {
+const Form = ({ inputs, setInputs, buttonText, handleSubmit }) => {
+
+    const handleInput = (value, idx) => {
+        setInputs([...inputs], inputs[idx].value = value);
+    }
+
     return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control
-                            type="email"
-                            placeholder="name@example.com"
-                            autoFocus
-                        />
-                    </Form.Group>
-                    <Form.Group
-                        className="mb-3"
-                        controlId="exampleForm.ControlTextarea1"
-                    >
-                        <Form.Label>Example textarea</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
-            </Modal.Footer>
-        </Modal>
+        <form onSubmit={handleSubmit} className={styles.form_container}>
+            {
+                inputs.map((input, inputIdx) => (
+                    <div className={styles.form_item} key={inputIdx}>
+                        <label>{input.label}</label>
+                        <input
+                            type={input.type}
+                            value={input.value}
+                            onChange={(e) => handleInput(e.target.value, inputIdx)}
+                            placeholder={input.placeholder} required />
+                    </div>
+                ))
+            }
+
+            <button type="submit">{buttonText}</button>
+        </form>
     );
 };
 
-export default ModalBox;
+export default Form;

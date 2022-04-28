@@ -13,17 +13,18 @@ import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import TeamData from "./pages/TeamData";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 
 const App = () => {
   return (
     <div className="app_container">
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/:id" element={<TeamData />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
       <Footer />
     </div>
