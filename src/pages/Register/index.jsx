@@ -1,4 +1,4 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -15,17 +15,10 @@ import Form from "../../components/Form";
 import Header from "../../components/Header";
 
 /** Queries */
-import { GET_USER } from "../../GraphQL/Users/queries";
+import { INSERT_USER } from "../../GraphQL/Users/queries";
 
-const Login = () => {
-
+const Register = (params) => {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (localStorage.getItem("token") !== null) {
-            navigate("/dashboard");
-        }
-    }, [])
 
     const [inputs, setInputs] = useState([
         {
@@ -42,31 +35,38 @@ const Login = () => {
             value: "",
             placeholder: "Masukkan Password",
         },
+        {
+            label: "Email",
+            name: "email",
+            type: "email",
+            value: "",
+            placeholder: "Masukkan Email",
+        },
+        {
+            label: "No Handphone",
+            name: "noHandphone",
+            type: "text",
+            value: "",
+            placeholder: "Masukkan Nomor Handphone",
+        },
     ]);
 
-    const [getUsers, { data, loading, error }] = useLazyQuery(GET_USER, {
+    const [insertUser, { data, loading, error }] = useMutation(INSERT_USER, {
         onCompleted: (data) => {
-            if (data.users.length === 0) {
-                Swal.fire(
-                    'Login Gagal!',
-                    'Username atau password tidak valid.',
-                    'error'
-                )
-            }
-            else {
-                localStorage.setItem("token", JSON.stringify(data.users[0]));
+            Swal.fire(
+                'Register Berhasil!',
+                'Akun anda sudah terdaftar.',
+                'success'
+            )
 
-                Swal.fire(
-                    'Login Berhasil!',
-                    'Ayo Daftarkan Tim Terbaikmu.',
-                    'success'
-                )
-
-                navigate("/dashboard");
-            }
+            navigate("/login");
         },
         onError: (error) => {
-            alert("Ada Error!!!");
+            Swal.fire(
+                'Register Gagal!',
+                'Username sudah pernah ada.',
+                'error'
+            )
         }
     })
 
@@ -74,33 +74,33 @@ const Login = () => {
 
         e.preventDefault();
 
-        getUsers({
+        insertUser({
             variables: {
                 username: inputs[0].value,
                 password: inputs[1].value,
+                email: inputs[2].value,
+                noHandphone: inputs[3].value,
             }
         })
 
-        setInputs([...inputs], inputs[0].value = "", inputs[1].value = "");
+        setInputs([...inputs], inputs[0].value = "", inputs[1].value = "", inputs[2].value = "", inputs[3].value = "");
     }
 
     return (
         <>
             <Header />
-            <div className={styles.login_container}>
-                <h2>Login</h2>
+            <div className={styles.register_container}>
+                <h2>Register</h2>
                 {
                     loading ?
                         <Spinner animation="border" variant="light" className={styles.spinner} />
                         :
                         <></>
                 }
-                <Form inputs={inputs} setInputs={setInputs} buttonText="Login" handleSubmit={handleSubmit} />
-
-                <p>Belum punya akun? <Link to="/register">Register di sini!</Link></p>
+                <Form inputs={inputs} setInputs={setInputs} buttonText="Register" handleSubmit={handleSubmit} />
             </div>
         </>
     );
 };
 
-export default Login;
+export default Register;

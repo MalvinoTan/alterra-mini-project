@@ -11,7 +11,7 @@ import styles from "./style.module.css";
 
 /** Queries */
 import { DELETE_MEMBER_BY_ID, DELETE_MEMBERS_BY_ID_TEAM, GET_TEAM_AND_MEMBERS_BY_ID } from "../../GraphQL/Members/queries";
-import { DELETE_TEAM_BY_ID } from "../../GraphQL/Teams/queries";
+import { DELETE_TEAM_BY_ID, UPDATE_TEAM_FILES_BY_ID } from "../../GraphQL/Teams/queries";
 
 /** Components */
 import Header from "../../components/Header";
@@ -20,8 +20,8 @@ import { useEffect, useState } from "react";
 const TeamData = () => {
 
     const [files, setFiles] = useState({
-        ktm: "",
-        buktiPembayaran: "",
+        ktm: null,
+        buktiPembayaran: null,
     })
 
     const navigate = useNavigate();
@@ -73,12 +73,34 @@ const TeamData = () => {
     const [deleteMembersByIdTeam, { }] = useMutation(DELETE_MEMBERS_BY_ID_TEAM, {
         onCompleted: (data) => {
             refetch();
+
+            deleteTeamById({
+                variables: {
+                    id
+                }
+            })
         },
         onError: (error) => {
-            console.log(error)
+            console.log(error);
             alert("Ada Error!!!");
         }
     });
+
+    const [updateTeamFilesById, { loading: loadingUploadFiles }] = useMutation(UPDATE_TEAM_FILES_BY_ID, {
+        onCompleted: (data) => {
+            refetch();
+
+            Swal.fire(
+                'Berhasil!',
+                'File berhasil diupload.',
+                'success'
+            )
+        },
+        onError: (error) => {
+            console.log(error);
+            alert("Ada Error!!!");
+        }
+    })
 
     const handleDeleteTeam = (id) => {
         Swal.fire({
@@ -92,12 +114,6 @@ const TeamData = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteMembersByIdTeam({
-                    variables: {
-                        id
-                    }
-                });
-
-                deleteTeamById({
                     variables: {
                         id
                     }
@@ -127,16 +143,44 @@ const TeamData = () => {
         })
     }
 
-    const toBase64 = (file) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
 
-    const handleUpload = async (params) => {
-        console.log(await toBase64(files));
 
+    const handleUploadKTM = () => {
+        if (files.ktm != null) {
+            getBase64(files.ktm).then(ktm => {
+                console.log("KTM ", ktm);
+                updateTeamFilesById({
+                    variables: {
+                        id,
+                        ktm,
+                        buktiPembayaran: data.teams[0].buktiPembayaran,
+                    }
+                })
+            })
+        }
+    }
+
+    const handleUploadBuktiPembayaran = () => {
+        if (files.buktiPembayaran != null) {
+            getBase64(files.buktiPembayaran).then(buktiPembayaran => {
+                console.log("BUKTI ", buktiPembayaran);
+                updateTeamFilesById({
+                    variables: {
+                        id,
+                        ktm: data.teams[0].ktm,
+                        buktiPembayaran,
+                    }
+                })
+            })
+        }
     }
 
     return (
@@ -145,7 +189,7 @@ const TeamData = () => {
             <div className={styles.team_data_container}>
                 <Link to="/dashboard" className={styles.back}>&lt; Back to Team List</Link>
                 {
-                    loading || loadingDeleteTeam || loadingDeleteMember ?
+                    loading || loadingDeleteTeam || loadingDeleteMember || loadingUploadFiles ?
                         <Spinner animation="border" variant="light" className={styles.spinner} />
                         :
                         !loading && data ?
@@ -155,7 +199,7 @@ const TeamData = () => {
 
                                     <p>{data.teams[0].university}</p>
 
-                                    <p className={styles.status}>Status: Belum Terverifikasi</p>
+                                    <p className={styles.status}>Status: {data.teams[0].status ? "Sudah" : "Belum"} Terverifikasi</p>
 
                                     <p className={styles.title}>Anggota Tim</p>
 
@@ -177,12 +221,12 @@ const TeamData = () => {
                                     }
 
                                     <label className={styles.title}>Upload KTM (.rar/.zip) </label>
-                                    <input type="file" accept=".rar,.zip" className={styles.file_input} onChange={(e) => setFiles({ ...files, ktm: e.target.files })} /><br />
+                                    <input type="file" accept=".rar,.zip" className={styles.file_input} onChange={(e) => setFiles({ ...files, ktm: e.target.files[0] })} /><br />
+                                    <button type="button" className={styles.btn_upload} onClick={handleUploadKTM}>Upload</button><br />
 
                                     <label className={styles.title}>Upload Bukti Pembayaran (.pdf) </label>
-                                    <input type="file" accept=".pdf" className={styles.file_input} onChange={(e) => setFiles({ ...files, buktiPembayaran: e.target.files })} />
-
-                                    <button type="button" className={styles.btn_upload} onClick={handleUpload}>Upload File</button>
+                                    <input type="file" accept=".pdf" className={styles.file_input} onChange={(e) => setFiles({ ...files, buktiPembayaran: e.target.files[0] })} />
+                                    <button type="button" className={styles.btn_upload} onClick={handleUploadBuktiPembayaran}>Upload</button>
                                 </div>
                                 <button type="button" className={data.members.length === 2 ? styles.hidden : null} onClick={() => navigate("add-member")}>Tambah Anggota</button>
                                 <button type="button" className={styles.btn_delete} onClick={() => handleDeleteTeam(id)}>Hapus Tim</button>

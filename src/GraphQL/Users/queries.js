@@ -8,6 +8,15 @@ export const GET_USER = gql`
             noHandphone
             password
             username
+            role
         }
     }
 `;
+
+export const INSERT_USER = gql`
+    mutation insertUser($username: String, $password: String, $email: String, $noHandphone: String) {
+        insert_users_one(object: {username: $username, password: $password, email: $email, noHandphone: $noHandphone}) {
+            id
+        }
+    }
+`

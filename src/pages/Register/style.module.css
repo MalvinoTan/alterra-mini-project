@@ -1,4 +1,4 @@
-.login_container {
+.register_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,21 +8,8 @@
     margin: 0 auto;
 }
 
-.login_container h2 {
-    margin-bottom: 2rem;
-}
-
-.login_container a {
-    color: rgb(87, 188, 255);
-    text-decoration: none;
-}
-
-.login_container a:hover {
-    color: rgb(0, 153, 255);
-}
-
 .spinner {
-    margin: 0 auto;
+    margin: 1.5rem auto;
 }
 
 @media screen and (min-width: 768px) {

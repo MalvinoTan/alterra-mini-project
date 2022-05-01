@@ -16,6 +16,8 @@ import Logout from "./pages/Logout";
 import AddTeam from "./pages/AddTeam";
 import AddMember from "./pages/AddMember";
 import EditMember from "./pages/EditMember";
+import Register from "./pages/Register";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
@@ -26,10 +28,12 @@ const App = () => {
         <Route path="/dashboard/:id" element={<TeamData />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/dashboard/add-team" element={<AddTeam />} />
         <Route path="/dashboard/:id/add-member" element={<AddMember />} />
         <Route path="/dashboard/:id/edit-member/:id_member" element={<EditMember />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </div>

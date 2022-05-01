@@ -1,6 +1,17 @@
 import { gql } from "@apollo/client";
 
-export const GET_TEAMS = gql`
+export const GET_TEAMS_FOR_ADMIN = gql`
+    query getTeams {
+        teams {
+            id
+            id_user
+            teamName
+            university
+        }
+    }
+`;
+
+export const GET_TEAMS_FOR_COACH = gql`
     query getTeams($id: Int) {
         teams(where: {id_user: {_eq: $id}}) {
             id
@@ -29,3 +40,23 @@ export const DELETE_TEAM_BY_ID = gql`
         }
     }
 `;
+
+export const UPDATE_TEAM_FILES_BY_ID = gql`
+    mutation updateFiles($id: Int, $ktm: String, $buktiPembayaran: String) {
+        update_teams(_set: {ktm: $ktm, buktiPembayaran: $buktiPembayaran}, where: {id: {_eq: $id}}) {
+            returning {
+                id
+            }
+        }
+    }
+`;
+
+export const UPDATE_TEAM_STATUS = gql`
+    mutation updateStatus($id: Int, $status: Boolean) {
+        update_teams(where: {id: {_eq: $id}}, _set: {status: $status}) {
+            returning {
+                id
+            }
+        }
+    }
+`

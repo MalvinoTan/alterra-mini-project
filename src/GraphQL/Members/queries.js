@@ -18,6 +18,9 @@ export const GET_TEAM_AND_MEMBERS_BY_ID = gql`
             id
             teamName
             university
+            ktm
+            buktiPembayaran
+            status
         }
         members(where: {id_team: {_eq: $id}}, order_by: {id: asc}) {
             email

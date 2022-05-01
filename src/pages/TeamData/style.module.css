@@ -44,8 +44,9 @@
 
 p.status {
     padding: .5rem 0;
-    opacity: .5;
+    opacity: .9;
     font-style: italic;
+    color: white;
 }
 
 p {
@@ -68,11 +69,10 @@ p {
 
 .file_input {
     width: 100%;
-    margin-left: 0.3rem;
 }
 
 .btn_upload {
-    margin-top: 3rem !important;
+    margin-top: 1rem !important;
 }
 
 .btn_delete {
