@@ -1,6 +1,8 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
+import Swal from 'sweetalert2';
+
 /** Bootstrap Components */
 import { Spinner } from "react-bootstrap";
 
@@ -8,13 +10,19 @@ import { Spinner } from "react-bootstrap";
 import styles from "./style.module.css";
 
 /** Queries */
-import { DELETE_MEMBER, GET_TEAM_AND_MEMBERS_BY_ID } from "../../GraphQL/Members/queries";
+import { DELETE_MEMBER_BY_ID, DELETE_MEMBERS_BY_ID_TEAM, GET_TEAM_AND_MEMBERS_BY_ID } from "../../GraphQL/Members/queries";
 import { DELETE_TEAM_BY_ID } from "../../GraphQL/Teams/queries";
 
 /** Components */
 import Header from "../../components/Header";
+import { useEffect, useState } from "react";
 
 const TeamData = () => {
+
+    const [files, setFiles] = useState({
+        ktm: "",
+        buktiPembayaran: "",
+    })
 
     const navigate = useNavigate();
 
@@ -26,8 +34,18 @@ const TeamData = () => {
         }
     });
 
+    useEffect(() => {
+        refetch();
+    }, [])
+
     const [deleteTeamById, { loading: loadingDeleteTeam }] = useMutation(DELETE_TEAM_BY_ID, {
         onCompleted: (data) => {
+            Swal.fire(
+                'Berhasil!',
+                'Tim berhasil dihapus.',
+                'success'
+            )
+
             navigate("/dashboard")
         },
         onError: (error) => {
@@ -36,10 +54,25 @@ const TeamData = () => {
         }
     });
 
-    const [deleteMemberById, { loading: loadingDeleteMember }] = useMutation(DELETE_MEMBER, {
+    const [deleteMemberById, { loading: loadingDeleteMember }] = useMutation(DELETE_MEMBER_BY_ID, {
         onCompleted: (data) => {
             refetch();
-            navigate(`/dashboard/${id}`);
+
+            Swal.fire(
+                'Berhasil!',
+                'Anggota tim berhasil dihapus.',
+                'success'
+            )
+        },
+        onError: (error) => {
+            console.log(error)
+            alert("Ada Error!!!");
+        }
+    });
+
+    const [deleteMembersByIdTeam, { }] = useMutation(DELETE_MEMBERS_BY_ID_TEAM, {
+        onCompleted: (data) => {
+            refetch();
         },
         onError: (error) => {
             console.log(error)
@@ -48,19 +81,62 @@ const TeamData = () => {
     });
 
     const handleDeleteTeam = (id) => {
-        deleteTeamById({
-            variables: {
-                id
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Tidak dapat kembali setelah menghapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteMembersByIdTeam({
+                    variables: {
+                        id
+                    }
+                });
+
+                deleteTeamById({
+                    variables: {
+                        id
+                    }
+                })
             }
         })
-    };
+
+    }
 
     const handleDeleteMember = (id) => {
-        deleteMemberById({
-            variables: {
-                id
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Tidak dapat kembali setelah menghapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteMemberById({
+                    variables: {
+                        id
+                    }
+                })
             }
         })
+    }
+
+    const toBase64 = (file) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
+    const handleUpload = async (params) => {
+        console.log(await toBase64(files));
+
     }
 
     return (
@@ -69,7 +145,7 @@ const TeamData = () => {
             <div className={styles.team_data_container}>
                 <Link to="/dashboard" className={styles.back}>&lt; Back to Team List</Link>
                 {
-                    loading || loadingDeleteTeam ?
+                    loading || loadingDeleteTeam || loadingDeleteMember ?
                         <Spinner animation="border" variant="light" className={styles.spinner} />
                         :
                         !loading && data ?
@@ -94,21 +170,21 @@ const TeamData = () => {
                                                     <p>NIM : {member.nim}</p>
                                                     <p>Email : {member.email}</p>
                                                     <p>No HP : {member.noHandphone}</p>
-                                                    <button type="button">Edit</button>
+                                                    <button type="button" onClick={() => navigate(`edit-member/${member.id}`)}>Edit</button>
                                                     <button type="button" className={styles.btn_delete} onClick={() => handleDeleteMember(member.id)}>Hapus Anggota</button>
                                                 </div>
                                             ))
                                     }
 
                                     <label className={styles.title}>Upload KTM (.rar/.zip) </label>
-                                    <input type="file" accept=".rar,.zip" className={styles.file_input} /><br />
+                                    <input type="file" accept=".rar,.zip" className={styles.file_input} onChange={(e) => setFiles({ ...files, ktm: e.target.files })} /><br />
 
                                     <label className={styles.title}>Upload Bukti Pembayaran (.pdf) </label>
-                                    <input type="file" accept=".pdf" className={styles.file_input} />
+                                    <input type="file" accept=".pdf" className={styles.file_input} onChange={(e) => setFiles({ ...files, buktiPembayaran: e.target.files })} />
 
-                                    <button type="button" className={styles.btn_upload}>Upload File</button>
+                                    <button type="button" className={styles.btn_upload} onClick={handleUpload}>Upload File</button>
                                 </div>
-                                <button type="button" className={styles.hidden} onClick={() => { navigate("add-member") }}>Tambah Anggota</button>
+                                <button type="button" className={data.members.length === 2 ? styles.hidden : null} onClick={() => navigate("add-member")}>Tambah Anggota</button>
                                 <button type="button" className={styles.btn_delete} onClick={() => handleDeleteTeam(id)}>Hapus Tim</button>
                             </div>
                             :

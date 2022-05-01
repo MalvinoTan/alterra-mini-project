@@ -80,6 +80,10 @@ p {
     background-color: red;
 }
 
+.hidden {
+    display: none;
+}
+
 @media screen and (min-width: 768px) {
     .team_data_container {
         padding: 110px 2.5rem 100px 2.5rem;

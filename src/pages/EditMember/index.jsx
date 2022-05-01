@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 
 import { useNavigate, Link, useParams } from "react-router-dom";
@@ -12,32 +12,17 @@ import { Spinner } from "react-bootstrap";
 import styles from "./style.module.css";
 
 /** Queries */
-import { INSERT_MEMBER } from "../../GraphQL/Members/queries";
+import { GET_MEMBER_BY_ID, UPDATE_MEMBER_BY_ID } from "../../GraphQL/Members/queries";
 
 /** Components */
 import Form from "../../components/Form";
 import Header from "../../components/Header";
 
-const AddMember = () => {
+const EditMember = () => {
 
     const navigate = useNavigate();
 
-    const { id } = useParams();
-
-    const [insertMember, { loading }] = useMutation(INSERT_MEMBER, {
-        onCompleted: (data) => {
-            Swal.fire(
-                'Berhasil!',
-                'Anggota tim berhasil ditambah.',
-                'success'
-            )
-
-            navigate(`/dashboard/${id}`);
-        },
-        onError: (error) => {
-            alert("Ada Error!!!");
-        }
-    })
+    const { id, id_member } = useParams();
 
     const [inputs, setInputs] = useState([
         {
@@ -70,12 +55,38 @@ const AddMember = () => {
         },
     ]);
 
+    const { data, loading } = useQuery(GET_MEMBER_BY_ID, {
+        variables: {
+            id: id_member
+        },
+        onCompleted: (data) => {
+            const { name, nim, email, noHandphone } = data.members[0];
+            setInputs([...inputs], inputs[0].value = name, inputs[1].value = nim, inputs[2].value = email, inputs[3].value = noHandphone);
+        }
+    });
+
+    const [updateMemberById, { loading: loadingUpdate }] = useMutation(UPDATE_MEMBER_BY_ID, {
+        onCompleted: (data) => {
+            Swal.fire(
+                'Berhasil!',
+                'Anggota tim berhasil diupdate.',
+                'success'
+            )
+
+            navigate(`/dashboard/${id}`);
+        },
+        onError: (error) => {
+            console.log(error)
+            alert("Ada Error!!!");
+        }
+    })
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        insertMember({
+        updateMemberById({
             variables: {
-                id_team: id,
+                id: id_member,
                 name: inputs[0].value,
                 nim: inputs[1].value,
                 email: inputs[2].value,
@@ -84,26 +95,29 @@ const AddMember = () => {
         })
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "", inputs[2].value = "", inputs[3].value = "");
-
-
     }
 
     return (
         <>
             <Header />
             <Link to={`/dashboard/${id}`} className={styles.back}>&lt; Back to Team Data</Link>
-            <div className={styles.add_member_container}>
-                <h2>Tambah Anggota</h2>
+            <div className={styles.edit_member_container}>
+                <h2>Edit Anggota</h2>
                 {
                     loading ?
                         <Spinner animation="border" variant="light" className={styles.spinner} />
                         :
-                        <></>
+                        loadingUpdate ?
+                            <>
+                                <Spinner animation="border" variant="light" className={styles.spinner} />
+                                <Form inputs={inputs} setInputs={setInputs} buttonText="Save" handleSubmit={handleSubmit} />
+                            </>
+                            :
+                            <Form inputs={inputs} setInputs={setInputs} buttonText="Save" handleSubmit={handleSubmit} />
                 }
-                <Form inputs={inputs} setInputs={setInputs} buttonText="Tambah" handleSubmit={handleSubmit} />
             </div>
         </>
     );
 };
 
-export default AddMember;
+export default EditMember;

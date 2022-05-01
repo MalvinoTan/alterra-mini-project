@@ -2,6 +2,8 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 /** Bootstrap Components */
 import { Spinner } from "react-bootstrap";
 
@@ -21,6 +23,12 @@ const AddTeam = () => {
 
     const [insertTeam, { loading }] = useMutation(INSERT_TEAM, {
         onCompleted: (data) => {
+            Swal.fire(
+                'Berhasil!',
+                'Tim berhasil ditambah.',
+                'success'
+            )
+
             navigate("/dashboard");
         },
         onError: (error) => {
@@ -58,6 +66,8 @@ const AddTeam = () => {
         })
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "");
+
+
     }
 
     return (

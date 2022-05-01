@@ -21,6 +21,9 @@ const Dashboard = () => {
     const [getTeams, { data, loading, error, refetch }] = useLazyQuery(GET_TEAMS);
 
     useEffect(() => {
+
+        refetch();
+
         const token = JSON.parse(localStorage.getItem("token"));
 
         if (token !== null) {

@@ -2,6 +2,8 @@ import { useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 /** Bootstrap Components */
 import { Spinner } from "react-bootstrap";
 
@@ -45,10 +47,21 @@ const Login = () => {
     const [getUsers, { data, loading, error }] = useLazyQuery(GET_USER, {
         onCompleted: (data) => {
             if (data.users.length === 0) {
-                alert("Username atau Password Tidak Valid!!!");
+                Swal.fire(
+                    'Login Gagal!',
+                    'Username atau password tidak valid.',
+                    'error'
+                )
             }
             else {
                 localStorage.setItem("token", JSON.stringify(data.users[0]));
+
+                Swal.fire(
+                    'Login Berhasil!',
+                    'Ayo Daftar!!!',
+                    'success'
+                )
+
                 navigate("/dashboard");
             }
         },
