@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+/** Sweet Alert */
 import Swal from "sweetalert2";
 
 /** Bootstrap Components */
@@ -14,27 +15,12 @@ import styles from "./style.module.css";
 import { INSERT_TEAM } from "../../GraphQL/Teams/queries";
 
 /** Components */
-import Form from "../../components/Form";
 import Header from "../../components/Header";
+import Form from "../../components/Form";
 
 const AddTeam = () => {
 
     const navigate = useNavigate();
-
-    const [insertTeam, { loading }] = useMutation(INSERT_TEAM, {
-        onCompleted: (data) => {
-            Swal.fire(
-                'Berhasil!',
-                'Tim berhasil ditambah.',
-                'success'
-            )
-
-            navigate("/dashboard");
-        },
-        onError: (error) => {
-            alert("Ada Error!!!");
-        }
-    })
 
     const [inputs, setInputs] = useState([
         {
@@ -53,8 +39,28 @@ const AddTeam = () => {
         },
     ]);
 
-    const handleSubmit = (e) => {
+    const [insertTeam, { loading }] = useMutation(INSERT_TEAM, {
+        onCompleted: () => {
+            Swal.fire(
+                "Berhasil!",
+                "Tim berhasil ditambah.",
+                "success"
+            );
 
+            navigate("/dashboard");
+        },
+        onError: (error) => {
+            console.log(error);
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
+        }
+    });
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         insertTeam({
@@ -63,17 +69,16 @@ const AddTeam = () => {
                 teamName: inputs[0].value,
                 university: inputs[1].value,
             }
-        })
+        });
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "");
-
-
-    }
+    };
 
     return (
         <>
             <Header />
             <Link to="/dashboard" className={styles.back}>&lt; Back to Team List</Link>
+
             <div className={styles.add_team_container}>
                 <h2>Tambah Tim</h2>
                 {
@@ -82,6 +87,7 @@ const AddTeam = () => {
                         :
                         <></>
                 }
+
                 <Form inputs={inputs} setInputs={setInputs} buttonText="Tambah" handleSubmit={handleSubmit} />
             </div>
         </>

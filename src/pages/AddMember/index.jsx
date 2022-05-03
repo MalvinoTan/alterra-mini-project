@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-
 import { useNavigate, Link, useParams } from "react-router-dom";
 
+/** Sweet Alert */
 import Swal from "sweetalert2";
 
 /** Bootstrap Components */
@@ -15,29 +15,14 @@ import styles from "./style.module.css";
 import { INSERT_MEMBER } from "../../GraphQL/Members/queries";
 
 /** Components */
-import Form from "../../components/Form";
 import Header from "../../components/Header";
+import Form from "../../components/Form";
 
 const AddMember = () => {
 
-    const navigate = useNavigate();
-
     const { id } = useParams();
 
-    const [insertMember, { loading }] = useMutation(INSERT_MEMBER, {
-        onCompleted: (data) => {
-            Swal.fire(
-                'Berhasil!',
-                'Anggota tim berhasil ditambah.',
-                'success'
-            )
-
-            navigate(`/dashboard/${id}`);
-        },
-        onError: (error) => {
-            alert("Ada Error!!!");
-        }
-    })
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState([
         {
@@ -70,6 +55,27 @@ const AddMember = () => {
         },
     ]);
 
+    const [insertMember, { loading }] = useMutation(INSERT_MEMBER, {
+        onCompleted: () => {
+            Swal.fire(
+                "Berhasil!",
+                "Anggota tim berhasil ditambah.",
+                "success"
+            );
+
+            navigate(`/dashboard/${id}`);
+        },
+        onError: (error) => {
+            console.log(error);
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
+        },
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -81,17 +87,16 @@ const AddMember = () => {
                 email: inputs[2].value,
                 noHandphone: inputs[3].value,
             }
-        })
+        });
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "", inputs[2].value = "", inputs[3].value = "");
-
-
-    }
+    };
 
     return (
         <>
             <Header />
             <Link to={`/dashboard/${id}`} className={styles.back}>&lt; Back to Team Data</Link>
+
             <div className={styles.add_member_container}>
                 <h2>Tambah Anggota</h2>
                 {

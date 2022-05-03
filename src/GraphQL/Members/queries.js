@@ -10,7 +10,7 @@ export const GET_MEMBER_BY_ID = gql`
             noHandphone
         }
     }  
-`
+`;
 
 export const GET_TEAM_AND_MEMBERS_BY_ID = gql`
     query getTeamAndMembers($id: Int) {
@@ -65,4 +65,4 @@ export const UPDATE_MEMBER_BY_ID = gql`
             id
         }
     }
-`
+`;

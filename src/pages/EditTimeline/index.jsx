@@ -1,6 +1,6 @@
 import { useState } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 /** Styles */
 import styles from "./style.module.css";
@@ -8,17 +8,17 @@ import styles from "./style.module.css";
 /** Components */
 import Form from "../../components/Form";
 import Header from "../../components/Header";
-import { useDispatch, useSelector } from "react-redux";
 
-import { editTimeline } from "../../store/Timeline"
+/** Actions */
+import { editTimeline } from "../../store/Timeline";
 
 const EditTimeline = () => {
 
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
-
     const timeline = useSelector((state) => state.timeline.timeline);
+
+    const dispatch = useDispatch();
 
     const [inputs, setInputs] = useState([
         {
@@ -85,12 +85,13 @@ const EditTimeline = () => {
         ]));
 
         navigate("/");
-    }
+    };
 
     return (
         <>
             <Header />
             <Link to="/" className={styles.back}>&lt; Back to Home</Link>
+
             <div className={styles.edit_timeline_container}>
                 <h2>Edit Timeline</h2>
                 <Form inputs={inputs} setInputs={setInputs} buttonText="Save" handleSubmit={handleSubmit} />

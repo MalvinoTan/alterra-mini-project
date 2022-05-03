@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 
 /** Images */
-import logo from "../../assets/img/logo.png"
+import logo from "../../assets/img/logo.png";
 
 /** Styles */
 import styles from "./style.module.css";
 
 const Header = () => {
 
-    const dataUser = JSON.parse(localStorage.getItem("token"))
+    const dataUser = JSON.parse(localStorage.getItem("token"));
 
     return (
         <header className={styles.header}>
@@ -18,6 +18,7 @@ const Header = () => {
                     <span>MComp 2022</span>
                 </Link>
             </h1>
+
             <nav className={styles.nav}>
                 <Link to="/">Home</Link>
                 <Link to="/dashboard" className={dataUser === null ? styles.hidden : null}>Dashboard</Link>

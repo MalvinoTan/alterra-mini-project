@@ -2,11 +2,6 @@
 import styles from "./style.module.css";
 
 const Form = ({ inputs, setInputs, buttonText, handleSubmit }) => {
-
-    const handleInput = (value, idx) => {
-        setInputs([...inputs], inputs[idx].value = value);
-    }
-
     return (
         <form onSubmit={handleSubmit} className={styles.form_container}>
             {
@@ -16,7 +11,7 @@ const Form = ({ inputs, setInputs, buttonText, handleSubmit }) => {
                         <input
                             type={input.type}
                             value={input.value}
-                            onChange={(e) => handleInput(e.target.value, inputIdx)}
+                            onChange={(e) => setInputs([...inputs], inputs[inputIdx].value = e.target.value)}
                             placeholder={input.placeholder} required />
                     </div>
                 ))

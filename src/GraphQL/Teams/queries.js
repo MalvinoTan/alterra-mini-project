@@ -59,4 +59,4 @@ export const UPDATE_TEAM_STATUS = gql`
             }
         }
     }
-`
+`;

@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
-
 import { useNavigate, Link, useParams } from "react-router-dom";
 
+/** Sweet Alert */
 import Swal from "sweetalert2";
 
 /** Bootstrap Components */
@@ -15,14 +15,14 @@ import styles from "./style.module.css";
 import { GET_MEMBER_BY_ID, UPDATE_MEMBER_BY_ID } from "../../GraphQL/Members/queries";
 
 /** Components */
-import Form from "../../components/Form";
 import Header from "../../components/Header";
+import Form from "../../components/Form";
 
 const EditMember = () => {
 
-    const navigate = useNavigate();
-
     const { id, id_member } = useParams();
+
+    const navigate = useNavigate();
 
     const [inputs, setInputs] = useState([
         {
@@ -55,31 +55,37 @@ const EditMember = () => {
         },
     ]);
 
-    const { data, loading } = useQuery(GET_MEMBER_BY_ID, {
+    const { loading } = useQuery(GET_MEMBER_BY_ID, {
         variables: {
             id: id_member
         },
         onCompleted: (data) => {
             const { name, nim, email, noHandphone } = data.members[0];
+
             setInputs([...inputs], inputs[0].value = name, inputs[1].value = nim, inputs[2].value = email, inputs[3].value = noHandphone);
         }
     });
 
     const [updateMemberById, { loading: loadingUpdate }] = useMutation(UPDATE_MEMBER_BY_ID, {
-        onCompleted: (data) => {
+        onCompleted: () => {
             Swal.fire(
-                'Berhasil!',
-                'Anggota tim berhasil diupdate.',
-                'success'
-            )
+                "Berhasil!",
+                "Anggota tim berhasil diupdate.",
+                "success"
+            );
 
             navigate(`/dashboard/${id}`);
         },
         onError: (error) => {
-            console.log(error)
-            alert("Ada Error!!!");
+            console.log(error);
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
-    })
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();

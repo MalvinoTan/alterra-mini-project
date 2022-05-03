@@ -1,7 +1,8 @@
 import { useLazyQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+/** Sweet Alert */
 import Swal from "sweetalert2";
 
 /** Bootstrap Components */
@@ -11,8 +12,8 @@ import { Spinner } from "react-bootstrap";
 import styles from "./style.module.css";
 
 /** Components */
-import Form from "../../components/Form";
 import Header from "../../components/Header";
+import Form from "../../components/Form";
 
 /** Queries */
 import { GET_USER } from "../../GraphQL/Users/queries";
@@ -21,11 +22,9 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem("token") !== null) {
-            navigate("/dashboard");
-        }
-    }, [])
+    if (localStorage.getItem("token") !== null) {
+        navigate("/dashboard");
+    }
 
     const [inputs, setInputs] = useState([
         {
@@ -44,34 +43,39 @@ const Login = () => {
         },
     ]);
 
-    const [getUsers, { data, loading, error }] = useLazyQuery(GET_USER, {
+    const [getUsers, { loading }] = useLazyQuery(GET_USER, {
         onCompleted: (data) => {
             if (data.users.length === 0) {
                 Swal.fire(
-                    'Login Gagal!',
-                    'Username atau password tidak valid.',
-                    'error'
-                )
+                    "Login Gagal!",
+                    "Username atau password tidak valid.",
+                    "error"
+                );
             }
             else {
                 localStorage.setItem("token", JSON.stringify(data.users[0]));
 
                 Swal.fire(
-                    'Login Berhasil!',
-                    'Ayo Daftarkan Tim Terbaikmu.',
-                    'success'
-                )
+                    "Login Berhasil!",
+                    "Ayo Daftarkan Tim Terbaikmu.",
+                    "success"
+                );
 
                 navigate("/dashboard");
             }
         },
         onError: (error) => {
-            alert("Ada Error!!!");
+            console.log(error);
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
-    })
+    });
 
     const handleSubmit = (e) => {
-
         e.preventDefault();
 
         getUsers({
@@ -79,10 +83,10 @@ const Login = () => {
                 username: inputs[0].value,
                 password: inputs[1].value,
             }
-        })
+        });
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "");
-    }
+    };
 
     return (
         <>

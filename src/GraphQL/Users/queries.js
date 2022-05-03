@@ -19,4 +19,4 @@ export const INSERT_USER = gql`
             id
         }
     }
-`
+`;

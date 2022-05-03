@@ -1,15 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+
+/** Styles */
 import "./index.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+/** Bootstrap */
+import "bootstrap/dist/css/bootstrap.min.css";
+
+/** Component */
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+
+/** GraphQL Apollo Client */
 import { ApolloProvider } from "@apollo/client";
 import client from "./apollo-client";
-import { BrowserRouter } from "react-router-dom";
+
+/** Redux Persist */
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
-import { Provider } from 'react-redux'
+import { Provider } from "react-redux"
+
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

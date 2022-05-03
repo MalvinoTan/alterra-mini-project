@@ -1,5 +1,5 @@
 /** Images */
-import logo from "../../assets/img/logo.png"
+import logo from "../../assets/img/logo.png";
 
 /** Styles */
 import styles from "./style.module.css";
@@ -25,7 +25,9 @@ const About = () => {
             <Header />
             <div className={styles.about_container}>
                 <img src={logo} alt="Logo" className={styles.logo} />
+
                 <h2 className={styles.title}>MComp 2022</h2>
+
                 <div className={styles.about}>
                     <p>
                         MComp 2022 yang merupakan singkatan dari Malvino Competition 2022 merupakan sebuah kompetisi gitar duo
@@ -35,12 +37,14 @@ const About = () => {
                         masih sangat sedikit yang menyelenggarakan kompetisi untuk gitar duo.
                     </p>
                 </div>
+
                 <h2>Image Gallery</h2>
+
                 <div className={styles.gallery}>
                     {
                         gallery_images.map((gallery_image, gallery_imageIdx) => (
                             <div className={styles.gallery_item} key={gallery_imageIdx}>
-                                <img src={gallery_image} />
+                                <img src={gallery_image} alt="gallery" />
                             </div>
                         ))
                     }

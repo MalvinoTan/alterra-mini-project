@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 /** Images */
 import alterra_logo from "../../assets/img/alterra.png";
@@ -9,25 +10,26 @@ import styles from "./style.module.css";
 
 /** Components */
 import Header from "../../components/Header";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const Home = () => {
+
+    const token = JSON.parse(localStorage.getItem("token"));
 
     const navigate = useNavigate();
 
     const timeline = useSelector((state) => state.timeline.timeline);
 
-    const token = JSON.parse(localStorage.getItem("token"));
-
     return (
         <>
-            <Header /><div className={styles.home_container}>
+            <Header />
+            <div className={styles.home_container}>
                 <h1>MCOMP 2022<br />GUITAR DUO COMPETITION</h1>
 
                 <div className={styles.button_container}>
-                    <a href="#" download><button type="button">Guidebook</button></a>
-                    <Link to="/dashboard"><button type="button" className={styles.btn_daftar}>Daftar</button></Link>
+                    <form method="get" action="http://speedtest.ftp.otenet.gr/files/test100k.db">
+                        <button type="submit">Guidebook</button>
+                        <Link to="/dashboard"><button type="button" className={styles.btn_daftar}>Daftar</button></Link>
+                    </form>
                 </div>
 
                 <p><b>Peserta:</b><br />Mahasiswa S1 di seluruh Indonesia</p>

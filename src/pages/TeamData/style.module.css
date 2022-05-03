@@ -67,14 +67,6 @@ p {
     font-weight: bold;
 }
 
-.file_input {
-    width: 100%;
-}
-
-.btn_upload {
-    margin-top: 1rem !important;
-}
-
 .btn_delete {
     color: white;
     background-color: red;

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
-import Swal from 'sweetalert2';
+/** Sweet Alert */
+import Swal from "sweetalert2";
 
 /** Bootstrap Components */
 import { Spinner } from "react-bootstrap";
@@ -15,42 +17,43 @@ import { DELETE_TEAM_BY_ID, UPDATE_TEAM_FILES_BY_ID } from "../../GraphQL/Teams/
 
 /** Components */
 import Header from "../../components/Header";
-import { useEffect, useState } from "react";
+import FileInput from "../../components/FileInput";
 
 const TeamData = () => {
+
+    const { id } = useParams();
+
+    const navigate = useNavigate();
 
     const [files, setFiles] = useState({
         ktm: null,
         buktiPembayaran: null,
-    })
+    });
 
-    const navigate = useNavigate();
-
-    const { id } = useParams();
-
-    const { data, loading, error, refetch } = useQuery(GET_TEAM_AND_MEMBERS_BY_ID, {
+    const { data, loading, refetch } = useQuery(GET_TEAM_AND_MEMBERS_BY_ID, {
         variables: {
             id
         }
     });
 
-    useEffect(() => {
-        refetch();
-    }, [])
-
     const [deleteTeamById, { loading: loadingDeleteTeam }] = useMutation(DELETE_TEAM_BY_ID, {
-        onCompleted: (data) => {
+        onCompleted: () => {
             Swal.fire(
-                'Berhasil!',
-                'Tim berhasil dihapus.',
-                'success'
-            )
+                "Berhasil!",
+                "Tim berhasil dihapus.",
+                "success"
+            );
 
             navigate("/dashboard")
         },
         onError: (error) => {
-            console.log(error)
-            alert("Ada Error!!!");
+            console.log(error);
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
     });
 
@@ -59,19 +62,24 @@ const TeamData = () => {
             refetch();
 
             Swal.fire(
-                'Berhasil!',
-                'Anggota tim berhasil dihapus.',
-                'success'
-            )
+                "Berhasil!",
+                "Anggota tim berhasil dihapus.",
+                "success"
+            );
         },
         onError: (error) => {
-            console.log(error)
-            alert("Ada Error!!!");
+            console.log(error);
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
     });
 
-    const [deleteMembersByIdTeam, { }] = useMutation(DELETE_MEMBERS_BY_ID_TEAM, {
-        onCompleted: (data) => {
+    const [deleteMembersByIdTeam] = useMutation(DELETE_MEMBERS_BY_ID_TEAM, {
+        onCompleted: () => {
             refetch();
 
             deleteTeamById({
@@ -82,66 +90,37 @@ const TeamData = () => {
         },
         onError: (error) => {
             console.log(error);
-            alert("Ada Error!!!");
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
     });
 
     const [updateTeamFilesById, { loading: loadingUploadFiles }] = useMutation(UPDATE_TEAM_FILES_BY_ID, {
-        onCompleted: (data) => {
+        onCompleted: () => {
             refetch();
 
             Swal.fire(
-                'Berhasil!',
-                'File berhasil diupload.',
-                'success'
-            )
+                "Berhasil!",
+                "File berhasil diupload.",
+                "success"
+            );
         },
         onError: (error) => {
             console.log(error);
-            alert("Ada Error!!!");
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
-    })
+    });
 
-    const handleDeleteTeam = (id) => {
-        Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Tidak dapat kembali setelah menghapus!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteMembersByIdTeam({
-                    variables: {
-                        id
-                    }
-                })
-            }
-        })
-
-    }
-
-    const handleDeleteMember = (id) => {
-        Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Tidak dapat kembali setelah menghapus!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteMemberById({
-                    variables: {
-                        id
-                    }
-                })
-            }
-        })
-    }
+    refetch();
 
     const getBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -150,44 +129,82 @@ const TeamData = () => {
             reader.onload = () => resolve(reader.result);
             reader.onerror = error => reject(error);
         });
-    }
+    };
 
+    const handleDeleteTeam = (id) => {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "Tidak dapat kembali setelah menghapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteMembersByIdTeam({
+                    variables: {
+                        id
+                    }
+                });
+            }
+        });
+    };
+
+    const handleDeleteMember = (id) => {
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "Tidak dapat kembali setelah menghapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteMemberById({
+                    variables: {
+                        id
+                    }
+                });
+            }
+        });
+    };
 
     const handleUploadKTM = () => {
         if (files.ktm != null) {
             getBase64(files.ktm).then(ktm => {
-                console.log("KTM ", ktm);
                 updateTeamFilesById({
                     variables: {
                         id,
                         ktm,
                         buktiPembayaran: data.teams[0].buktiPembayaran,
                     }
-                })
-            })
+                });
+            });
         }
-    }
+    };
 
     const handleUploadBuktiPembayaran = () => {
         if (files.buktiPembayaran != null) {
             getBase64(files.buktiPembayaran).then(buktiPembayaran => {
-                console.log("BUKTI ", buktiPembayaran);
                 updateTeamFilesById({
                     variables: {
                         id,
                         ktm: data.teams[0].ktm,
                         buktiPembayaran,
                     }
-                })
-            })
+                });
+            });
         }
-    }
+    };
 
     return (
         <>
             <Header />
             <div className={styles.team_data_container}>
                 <Link to="/dashboard" className={styles.back}>&lt; Back to Team List</Link>
+
                 {
                     loading || loadingDeleteTeam || loadingDeleteMember || loadingUploadFiles ?
                         <Spinner animation="border" variant="light" className={styles.spinner} />
@@ -220,19 +237,16 @@ const TeamData = () => {
                                             ))
                                     }
 
-                                    <label className={styles.title}>Upload KTM (.rar/.zip) </label>
-                                    <input type="file" accept=".rar,.zip" className={styles.file_input} onChange={(e) => setFiles({ ...files, ktm: e.target.files[0] })} /><br />
-                                    <button type="button" className={styles.btn_upload} onClick={handleUploadKTM}>Upload</button><br />
+                                    <FileInput name="ktm" title="Upload KTM (.rar/.zip)" accept=".rar,.zip" files={files} setFiles={setFiles} handleClick={handleUploadKTM} />
 
-                                    <label className={styles.title}>Upload Bukti Pembayaran (.pdf) </label>
-                                    <input type="file" accept=".pdf" className={styles.file_input} onChange={(e) => setFiles({ ...files, buktiPembayaran: e.target.files[0] })} />
-                                    <button type="button" className={styles.btn_upload} onClick={handleUploadBuktiPembayaran}>Upload</button>
+                                    <FileInput name="buktiPembayaran" title="Upload Bukti Pembayaran (.pdf)" accept=".pdf" files={files} setFiles={setFiles} handleClick={handleUploadBuktiPembayaran} />
                                 </div>
+
                                 <button type="button" className={data.members.length === 2 ? styles.hidden : null} onClick={() => navigate("add-member")}>Tambah Anggota</button>
                                 <button type="button" className={styles.btn_delete} onClick={() => handleDeleteTeam(id)}>Hapus Tim</button>
                             </div>
                             :
-                            <p>Terdapat Error: {error}</p>
+                            <p>Terdapat Error</p>
                 }
             </div>
         </>

@@ -11,6 +11,12 @@
     font-weight: bold;
 }
 
+.home_container form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .contact_logo_container img {
     width: 25px;
     margin: 0 0.9rem;

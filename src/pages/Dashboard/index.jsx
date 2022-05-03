@@ -1,7 +1,7 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
+/** Sweet Alert */
 import Swal from "sweetalert2";
 
 /** Bootstrap Components */
@@ -9,6 +9,7 @@ import { Spinner } from "react-bootstrap";
 
 /** Components */
 import Header from "../../components/Header";
+import Team from "../../components/Team";
 
 /** Styles */
 import styles from "./style.module.css";
@@ -18,58 +19,57 @@ import { GET_TEAMS_FOR_COACH, GET_TEAMS_FOR_ADMIN, UPDATE_TEAM_STATUS } from "..
 
 const Dashboard = () => {
 
+    const token = JSON.parse(localStorage.getItem("token"));
+
     const navigate = useNavigate();
 
-    const [getTeamsForCoach, { data, loading, error, refetch }] = useLazyQuery(GET_TEAMS_FOR_COACH);
+    const [getTeamsForCoach, { data, loading, refetch }] = useLazyQuery(GET_TEAMS_FOR_COACH);
 
-    const [getTeamsForAdmin, { data: dataTeamsAdmin, loading: loadingTeamsAdmin, error: errorTeamsAdmin, refetch: refetchTeamsAdmin }] = useLazyQuery(GET_TEAMS_FOR_ADMIN);
+    const [getTeamsForAdmin, { data: dataTeamsAdmin, loading: loadingTeamsAdmin, refetch: refetchTeamsAdmin }] = useLazyQuery(GET_TEAMS_FOR_ADMIN);
 
     const [updateTeamStatus, { loading: loadingUpdateStatus }] = useMutation(UPDATE_TEAM_STATUS, {
-        onCompleted: (data) => {
+        onCompleted: () => {
             Swal.fire(
-                'Update Berhasil',
-                'Status berhasil diupdate.',
-                'success'
-            )
+                "Update Berhasil",
+                "Status berhasil diupdate.",
+                "success"
+            );
         },
         onError: (error) => {
             console.log(error);
-            alert("Ada Error!!!");
+
+            Swal.fire(
+                "Ada Error!",
+                "",
+                "error"
+            );
         }
     });
 
-    const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
 
-    useEffect(() => {
+    refetch();
 
-        refetch();
+    refetchTeamsAdmin();
 
-        refetchTeamsAdmin();
-
-        if (token !== null) {
-            if (token.role === "admin") {
-                getTeamsForAdmin();
-            }
-            else {
-                getTeamsForCoach({
-                    variables: {
-                        id: token.id
-                    }
-                });
-            }
+    if (token !== null) {
+        if (token.role === "coach") {
+            getTeamsForCoach({
+                variables: {
+                    id: token.id
+                }
+            });
         }
         else {
-            navigate("/login");
+            getTeamsForAdmin();
         }
-    }, []);
+    }
+    else {
+        navigate("/login");
+    }
 
-    const handleClick = (id) => {
+    const handleClickTeam = (id) => {
         navigate(`${id}`);
-    }
-
-    const handleAdd = () => {
-        navigate("add-team");
-    }
+    };
 
     const handleStatus = (id, status) => {
         updateTeamStatus({
@@ -77,8 +77,8 @@ const Dashboard = () => {
                 id,
                 status,
             }
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -90,6 +90,7 @@ const Dashboard = () => {
                     <p>Email : {token.email}</p>
                     <p>No Handphone : {token.noHandphone}</p>
                 </div>
+
                 <h2>Team List</h2>
                 {
                     loading || loadingTeamsAdmin || loadingUpdateStatus ?
@@ -97,23 +98,17 @@ const Dashboard = () => {
                         :
                         !loading && data && token.role === "coach" ?
                             data.teams.length !== 0 ?
-                                data.teams.map((team, teamIdx) => (
-                                    <div className={styles.team} key={teamIdx} onClick={() => handleClick(team.id)}>
-                                        <h4>{team.teamName}<span className={styles.hidden}> - {team.university}</span></h4>
-                                        <h4 className={styles.hidden}><span>&gt;</span></h4>
-                                    </div>
+                                data.teams.map((team) => (
+                                    <Team team={team} handleClick={handleClickTeam} key={team.id} />
                                 ))
                                 :
                                 <p>Belum ada tim yang terdaftar...</p>
                             :
                             !loadingTeamsAdmin && dataTeamsAdmin && token.role === "admin" ?
                                 dataTeamsAdmin.teams.length !== 0 ?
-                                    dataTeamsAdmin.teams.map((team, teamIdx) => (
-                                        <div key={teamIdx}>
-                                            <div className={styles.team} onClick={() => handleClick(team.id)}>
-                                                <h4>{team.teamName}<span className={styles.hidden}> - {team.university}</span></h4>
-                                                <h4 className={styles.hidden}><span>&gt;</span></h4>
-                                            </div>
+                                    dataTeamsAdmin.teams.map((team) => (
+                                        <div key={team.id}>
+                                            <Team team={team} handleClick={handleClickTeam} />
                                             <div className={styles.btn_verif_group}>
                                                 <button type="button" onClick={() => handleStatus(team.id, true)}>Verifikasi</button>
                                                 <button type="button" onClick={() => handleStatus(team.id, false)}>Unverifikasi</button>
@@ -123,12 +118,12 @@ const Dashboard = () => {
                                     :
                                     <p>Belum ada tim yang terdaftar...</p>
                                 :
-                                <p>Terdapat Error: {error}</p>
+                                <p>Terdapat Error</p>
                 }
 
                 {
                     token.role === "coach" ?
-                        <button type="button" onClick={handleAdd} className={styles.btn_add}>Tambah Tim</button>
+                        <button type="button" onClick={() => navigate("add-team")} className={styles.btn_add}>Tambah Tim</button>
                         :
                         <></>
                 }

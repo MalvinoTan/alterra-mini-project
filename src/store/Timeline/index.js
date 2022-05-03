@@ -35,6 +35,6 @@ const timelineReducer = createSlice({
     }
 });
 
-export const { editTimeline } = timelineReducer.actions
+export const { editTimeline } = timelineReducer.actions;
 
-export default timelineReducer.reducer
+export default timelineReducer.reducer;

@@ -1,7 +1,8 @@
-import { useLazyQuery, useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+/** Sweet Alert */
 import Swal from "sweetalert2";
 
 /** Bootstrap Components */
@@ -11,13 +12,14 @@ import { Spinner } from "react-bootstrap";
 import styles from "./style.module.css";
 
 /** Components */
-import Form from "../../components/Form";
 import Header from "../../components/Header";
+import Form from "../../components/Form";
 
 /** Queries */
 import { INSERT_USER } from "../../GraphQL/Users/queries";
 
-const Register = (params) => {
+const Register = () => {
+
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState([
@@ -51,22 +53,22 @@ const Register = (params) => {
         },
     ]);
 
-    const [insertUser, { data, loading, error }] = useMutation(INSERT_USER, {
-        onCompleted: (data) => {
+    const [insertUser, { loading }] = useMutation(INSERT_USER, {
+        onCompleted: () => {
             Swal.fire(
                 'Register Berhasil!',
                 'Akun anda sudah terdaftar.',
                 'success'
-            )
+            );
 
             navigate("/login");
         },
-        onError: (error) => {
+        onError: () => {
             Swal.fire(
                 'Register Gagal!',
-                'Username sudah pernah ada.',
+                "Username sudah dipakai.",
                 'error'
-            )
+            );
         }
     })
 
@@ -81,7 +83,7 @@ const Register = (params) => {
                 email: inputs[2].value,
                 noHandphone: inputs[3].value,
             }
-        })
+        });
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "", inputs[2].value = "", inputs[3].value = "");
     }
