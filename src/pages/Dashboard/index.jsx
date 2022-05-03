@@ -16,6 +16,7 @@ import styles from "./style.module.css";
 
 /** Queries */
 import { GET_TEAMS_FOR_COACH, GET_TEAMS_FOR_ADMIN, UPDATE_TEAM_STATUS } from "../../GraphQL/Teams/queries";
+import { useEffect } from "react";
 
 const Dashboard = () => {
 
@@ -46,26 +47,27 @@ const Dashboard = () => {
         }
     });
 
+    useEffect(() => {
+        refetch();
 
-    refetch();
+        refetchTeamsAdmin();
 
-    refetchTeamsAdmin();
-
-    if (token !== null) {
-        if (token.role === "coach") {
-            getTeamsForCoach({
-                variables: {
-                    id: token.id
-                }
-            });
+        if (token !== null) {
+            if (token.role === "coach") {
+                getTeamsForCoach({
+                    variables: {
+                        id: token.id
+                    }
+                });
+            }
+            else {
+                getTeamsForAdmin();
+            }
         }
         else {
-            getTeamsForAdmin();
+            navigate("/login");
         }
-    }
-    else {
-        navigate("/login");
-    }
+    })
 
     const handleClickTeam = (id) => {
         navigate(`${id}`);
