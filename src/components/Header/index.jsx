@@ -13,8 +13,10 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <h1 className={styles.title}>
-                <img src={logo} alt="LOGO" />
-                <span>MComp 2022</span>
+                <Link to="/">
+                    <img src={logo} alt="LOGO" />
+                    <span>MComp 2022</span>
+                </Link>
             </h1>
             <nav className={styles.nav}>
                 <Link to="/">Home</Link>

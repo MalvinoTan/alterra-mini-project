@@ -17,14 +17,21 @@
     justify-content: center;
 }
 
+.header .title a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
 .header .title img {
-    width: 40px;
+    width: 45px;
     margin-right: 0.55rem;
 }
 
 .header .title span {
-    padding-top: 7px;
     font-size: 24px;
+    margin-top: 7px;
 }
 
 .header .nav {

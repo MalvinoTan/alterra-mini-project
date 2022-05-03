@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 
 /** Pages */
 import Home from "./pages/Home";
+import EditTimeline from "./pages/EditTimeline";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import TeamData from "./pages/TeamData";
@@ -24,6 +25,7 @@ const App = () => {
     <div className="app_container">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/edit-timeline" element={<EditTimeline />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/:id" element={<TeamData />} />
         <Route path="/about" element={<About />} />

@@ -14,9 +14,9 @@ const Footer = () => {
             <h3>MComp 2022</h3>
             <div className={styles.footer_bottom}>
                 <div className={styles.contact_logo_container}>
-                    <a href="#"><img src={linkedin_logo} alt="Linkedin Logo" /></a>
-                    <a href="#"><img src={instagram_logo} alt="Instagram Logo" /></a>
-                    <a href="#"><img src={discord_logo} alt="Discord Logo" /></a>
+                    <a href="https://www.linkedin.com/in/malvino-austin-tanura/" target="_blank"><img src={linkedin_logo} alt="Linkedin Logo" /></a>
+                    <a href="https://www.instagram.com/malvino.tan/" target="_blank"><img src={instagram_logo} alt="Instagram Logo" /></a>
+                    <a href="https://discord.com/" target="_blank"><img src={discord_logo} alt="Discord Logo" /></a>
                 </div>
                 <p className={styles.copyright}>
                     Copyright 2022. All Right Reserved. MComp 2022

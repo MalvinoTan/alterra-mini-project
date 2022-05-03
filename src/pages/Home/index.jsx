@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /** Images */
 import alterra_logo from "../../assets/img/alterra.png";
@@ -9,31 +9,16 @@ import styles from "./style.module.css";
 
 /** Components */
 import Header from "../../components/Header";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Home = () => {
 
-    const timeline = [
-        {
-            title: "Pendaftaran",
-            date: "20 April 2022 - 15 Mei 2022",
-        },
-        {
-            title: "Penyisihan",
-            date: "22 Mei 2022",
-        },
-        {
-            title: "Pengumuman Finalis",
-            date: "29 Mei 2022",
-        },
-        {
-            title: "Final",
-            date: "7 Juni 2022",
-        },
-        {
-            title: "Pengumuman Pemenang",
-            date: "14 Juni 2022",
-        },
-    ];
+    const navigate = useNavigate();
+
+    const timeline = useSelector((state) => state.timeline.timeline);
+
+    const token = JSON.parse(localStorage.getItem("token"));
 
     return (
         <>
@@ -63,6 +48,17 @@ const Home = () => {
                         timeline.map((item, itemIdx) => (
                             <p key={itemIdx}><b>{item.title}</b><br />{item.date}</p>
                         ))
+                    }
+
+                    {
+                        token !== null ?
+                            token.role === "admin" ?
+                                <button type="button" onClick={() => navigate("/edit-timeline")}>Edit Timeline</button>
+                                :
+                                <></>
+                            :
+                            <></>
+
                     }
                 </div>
 
