@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_TEAMS_FOR_ADMIN = gql`
     query getTeams {
-        teams {
+        teams (order_by: {id: asc}) {
             id
             id_user
             teamName
@@ -13,7 +13,7 @@ export const GET_TEAMS_FOR_ADMIN = gql`
 
 export const GET_TEAMS_FOR_COACH = gql`
     query getTeams($id: Int) {
-        teams(where: {id_user: {_eq: $id}}) {
+        teams(where: {id_user: {_eq: $id}}, order_by: {id: asc}) {
             id
             id_user
             teamName

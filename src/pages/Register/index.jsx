@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 /** Sweet Alert */
 import Swal from "sweetalert2";
@@ -91,6 +91,8 @@ const Register = () => {
     return (
         <>
             <Header />
+            <Link to="/login" className={styles.back}>&lt; Back to Team List</Link>
+
             <div className={styles.register_container}>
                 <h2>Register</h2>
                 {

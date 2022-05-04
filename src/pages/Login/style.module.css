@@ -13,12 +13,12 @@
 }
 
 .login_container a {
-    color: rgb(87, 188, 255);
+    color: #E4F065;
     text-decoration: none;
 }
 
 .login_container a:hover {
-    color: rgb(0, 153, 255);
+    color: #bdc941;
 }
 
 .spinner {
