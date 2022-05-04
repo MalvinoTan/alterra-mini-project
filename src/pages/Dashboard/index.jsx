@@ -47,11 +47,14 @@ const Dashboard = () => {
         }
     });
 
-    useEffect(() => {
+    if (token.role === "coach") {
         refetch();
-
+    }
+    else {
         refetchTeamsAdmin();
+    }
 
+    useEffect(() => {
         if (token !== null) {
             if (token.role === "coach") {
                 getTeamsForCoach({
