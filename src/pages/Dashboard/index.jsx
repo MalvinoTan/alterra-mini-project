@@ -67,7 +67,7 @@ const Dashboard = () => {
         else {
             navigate("/login");
         }
-    })
+    }, []);
 
     const handleClickTeam = (id) => {
         navigate(`${id}`);
@@ -85,54 +85,58 @@ const Dashboard = () => {
     return (
         <>
             <Header />
-            <div className={styles.dashboard_container}>
-                <div className={styles.profile}>
-                    <h3>{token.username}</h3>
-                    <p>Role : {token.role}</p>
-                    <p>Email : {token.email}</p>
-                    <p>No Handphone : {token.noHandphone}</p>
-                </div>
+            {
+                token !== null ?
+                    <div className={styles.dashboard_container}>
+                        <div className={styles.profile}>
+                            <h3>{token.username}</h3>
+                            <p>Role : {token.role}</p>
+                            <p>Email : {token.email}</p>
+                            <p>No Handphone : {token.noHandphone}</p>
+                        </div>
 
-                <h2>Team List</h2>
-                {
-                    loading || loadingTeamsAdmin || loadingUpdateStatus ?
-                        <Spinner animation="border" variant="light" className={styles.spinner} />
-                        :
-                        !loading && data && token.role === "coach" ?
-                            data.teams.length !== 0 ?
-                                data.teams.map((team) => (
-                                    <Team team={team} handleClick={handleClickTeam} key={team.id} />
-                                ))
+                        <h2>Team List</h2>
+                        {
+                            loading || loadingTeamsAdmin || loadingUpdateStatus ?
+                                <Spinner animation="border" variant="light" className={styles.spinner} />
                                 :
-                                <p>Belum ada tim yang terdaftar...</p>
-                            :
-                            !loadingTeamsAdmin && dataTeamsAdmin && token.role === "admin" ?
-                                dataTeamsAdmin.teams.length !== 0 ?
-                                    dataTeamsAdmin.teams.map((team) => (
-                                        <div key={team.id}>
-                                            <Team team={team} handleClick={handleClickTeam} />
-                                            <div className={styles.btn_verif_group}>
-                                                <button type="button" onClick={() => handleStatus(team.id, true)}>Verifikasi</button>
-                                                <button type="button" onClick={() => handleStatus(team.id, false)}>Unverifikasi</button>
-                                            </div>
-                                        </div>
-                                    ))
+                                !loading && data && token.role === "coach" ?
+                                    data.teams.length !== 0 ?
+                                        data.teams.map((team) => (
+                                            <Team team={team} handleClick={handleClickTeam} key={team.id} />
+                                        ))
+                                        :
+                                        <p>Belum ada tim yang terdaftar...</p>
                                     :
-                                    <p>Belum ada tim yang terdaftar...</p>
+                                    !loadingTeamsAdmin && dataTeamsAdmin && token.role === "admin" ?
+                                        dataTeamsAdmin.teams.length !== 0 ?
+                                            dataTeamsAdmin.teams.map((team) => (
+                                                <div key={team.id}>
+                                                    <Team team={team} handleClick={handleClickTeam} />
+                                                    <div className={styles.btn_verif_group}>
+                                                        <button type="button" onClick={() => handleStatus(team.id, true)}>Verifikasi</button>
+                                                        <button type="button" onClick={() => handleStatus(team.id, false)}>Unverifikasi</button>
+                                                    </div>
+                                                </div>
+                                            ))
+                                            :
+                                            <p>Belum ada tim yang terdaftar...</p>
+                                        :
+                                        <p>Terdapat Error</p>
+                        }
+
+                        {
+                            token.role === "coach" ?
+                                <button type="button" onClick={() => navigate("add-team")} className={styles.btn_add}>Tambah Tim</button>
                                 :
-                                <p>Terdapat Error</p>
-                }
+                                <></>
+                        }
 
-                {
-                    token.role === "coach" ?
-                        <button type="button" onClick={() => navigate("add-team")} className={styles.btn_add}>Tambah Tim</button>
-                        :
-                        <></>
-                }
-
-            </div>
+                    </div>
+                    :
+                    <></>
+            }
         </>
-
     );
 };
 

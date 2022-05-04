@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -120,7 +120,9 @@ const TeamData = () => {
         }
     });
 
-    refetch();
+    useEffect(() => {
+        refetch();
+    }, []);
 
     const getBase64 = (file) => {
         return new Promise((resolve, reject) => {
