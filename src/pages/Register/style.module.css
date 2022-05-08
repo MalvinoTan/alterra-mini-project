@@ -3,34 +3,30 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    padding: 0 1rem 100px 1rem;
+    padding: 210px 1rem 100px 1rem;
     max-width: 500px;
     margin: 0 auto;
 }
 
-.spinner {
-    margin: 1.5rem auto;
+.register_container h2 {
+    margin-bottom: 2rem;
 }
 
-.back {
-    display: flex;
-    text-decoration: none;
-    color: white;
-    font-size: 24px;
-    font-weight: bolder;
-    padding: 190px 0 2rem 1.5rem;
-}
-
-.back:hover {
+.register_container a {
     color: #E4F065;
+    text-decoration: none;
+}
+
+.register_container a:hover {
+    color: #bdc941;
+}
+
+.spinner {
+    margin: 0 auto;
 }
 
 @media screen and (min-width: 768px) {
-    .login_container {
+    .register_container {
         padding-top: 160px;
-    }
-
-    .back {
-        padding: 150px 0 2rem 2.5rem;
     }
 }

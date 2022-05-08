@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 /** Styles */
 import styles from "./style.module.css";
 
@@ -5,6 +7,12 @@ import styles from "./style.module.css";
 import Header from "../../components/Header";
 
 const Logout = () => {
+
+    const navigate = useNavigate();
+
+    setTimeout(() => {
+        navigate("/login");
+    }, 1000);
 
     localStorage.removeItem("token");
 

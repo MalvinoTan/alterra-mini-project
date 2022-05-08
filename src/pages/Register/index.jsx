@@ -91,8 +91,6 @@ const Register = () => {
     return (
         <>
             <Header />
-            <Link to="/login" className={styles.back}>&lt; Back to Team List</Link>
-
             <div className={styles.register_container}>
                 <h2>Register</h2>
                 {
@@ -102,6 +100,8 @@ const Register = () => {
                         <></>
                 }
                 <Form inputs={inputs} setInputs={setInputs} buttonText="Register" handleSubmit={handleSubmit} />
+
+                <p>Sudah punya akun? <Link to="/register">Login di sini!</Link></p>
             </div>
         </>
     );
