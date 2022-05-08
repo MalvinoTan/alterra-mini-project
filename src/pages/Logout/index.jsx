@@ -12,7 +12,7 @@ const Logout = () => {
 
     setTimeout(() => {
         navigate("/login");
-    }, 1000);
+    }, 500);
 
     localStorage.removeItem("token");
 
