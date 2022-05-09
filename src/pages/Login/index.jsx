@@ -1,5 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 /** Sweet Alert */
@@ -22,9 +22,11 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    if (localStorage.getItem("token") !== null) {
-        navigate("/dashboard");
-    }
+    useEffect(() => {
+        if (localStorage.getItem("token") !== null) {
+            navigate("/dashboard");
+        }
+    }, []);
 
     const [inputs, setInputs] = useState([
         {

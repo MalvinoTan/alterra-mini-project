@@ -241,7 +241,21 @@ const TeamData = () => {
 
                                     <FileInput name="ktm" title="Upload KTM (.rar/.zip)" accept=".rar,.zip" files={files} setFiles={setFiles} handleClick={handleUploadKTM} />
 
+                                    {
+                                        data.teams[0].ktm !== null ?
+                                            <p><span>KTM sudah diupload</span></p>
+                                            :
+                                            <></>
+                                    }
+
                                     <FileInput name="buktiPembayaran" title="Upload Bukti Pembayaran (.pdf)" accept=".pdf" files={files} setFiles={setFiles} handleClick={handleUploadBuktiPembayaran} />
+
+                                    {
+                                        data.teams[0].buktiPembayaran !== null ?
+                                            <p><span>Bukti Pembayaran sudah diupload</span></p>
+                                            :
+                                            <></>
+                                    }
                                 </div>
 
                                 <button type="button" className={data.members.length === 2 ? styles.hidden : null} onClick={() => navigate("add-member")}>Tambah Anggota</button>
