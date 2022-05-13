@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 
 /** Sweet Alert */
@@ -19,6 +19,8 @@ import Header from "../../components/Header";
 import Form from "../../components/Form";
 
 const AddMember = () => {
+
+    const token = JSON.parse(localStorage.getItem("token"));
 
     const { id } = useParams();
 
@@ -91,6 +93,12 @@ const AddMember = () => {
 
         setInputs([...inputs], inputs[0].value = "", inputs[1].value = "", inputs[2].value = "", inputs[3].value = "");
     };
+
+    useEffect(() => {
+        if (token === null) {
+            navigate("/login");
+        }
+    }, []);
 
     return (
         <>

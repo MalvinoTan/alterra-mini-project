@@ -21,6 +21,8 @@ import FileInput from "../../components/FileInput";
 
 const TeamData = () => {
 
+    const token = JSON.parse(localStorage.getItem("token"));
+
     const { id } = useParams();
 
     const navigate = useNavigate();
@@ -121,7 +123,12 @@ const TeamData = () => {
     });
 
     useEffect(() => {
-        refetch();
+        if (token !== null) {
+            refetch();
+        }
+        else {
+            navigate("/login");
+        }
     }, []);
 
     const getBase64 = (file) => {

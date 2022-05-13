@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,6 +13,8 @@ import Header from "../../components/Header";
 import { editTimeline } from "../../store/Timeline";
 
 const EditTimeline = () => {
+
+    const token = JSON.parse(localStorage.getItem("token"));
 
     const navigate = useNavigate();
 
@@ -86,6 +88,12 @@ const EditTimeline = () => {
 
         navigate("/");
     };
+
+    useEffect(() => {
+        if (token === null || token?.role === "coach") {
+            navigate("/login");
+        }
+    }, []);
 
     return (
         <>

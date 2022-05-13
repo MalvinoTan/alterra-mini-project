@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 /** Sweet Alert */
@@ -19,6 +19,8 @@ import Header from "../../components/Header";
 import Form from "../../components/Form";
 
 const AddTeam = () => {
+
+    const token = JSON.parse(localStorage.getItem("token"));
 
     const navigate = useNavigate();
 
@@ -59,6 +61,12 @@ const AddTeam = () => {
             );
         }
     });
+
+    useEffect(() => {
+        if (token === null) {
+            navigate("/login");
+        }
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
