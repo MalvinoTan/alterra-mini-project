@@ -101,7 +101,7 @@ const Register = () => {
                 }
                 <Form inputs={inputs} setInputs={setInputs} buttonText="Register" handleSubmit={handleSubmit} />
 
-                <p>Sudah punya akun? <Link to="/register">Login di sini!</Link></p>
+                <p>Sudah punya akun? <Link to="/login">Login di sini!</Link></p>
             </div>
         </>
     );
